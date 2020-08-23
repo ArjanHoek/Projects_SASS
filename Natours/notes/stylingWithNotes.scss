@@ -1,0 +1,263 @@
+$color-primary: #55c57a;
+$color-primary-light: rgba(126, 213, 111, 1);
+$color-primary-dark: rgba(40, 180, 131, 1);
+
+$color-grey-dark: #777;
+$color-white: #fff;
+$color-black: #000;
+
+*, *::after, *::before {
+  /* Reset the default margin and padding of all elements */
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  /* After setting the global font size to 10px, any other measurement in this css file can refer to this size with rem instead of px. For example, to set a font-size of 16px, use 1.6rem. However, setting the root font size to pixels is considered bad practice and should be set to a percentage of the browser's default font size, which is 16px. */
+  font-size: 62.5%;
+}
+
+body {
+  /* Always define general font properties in the body tag */
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  /* font-size: 16px; */
+  /* Set line-height 1.7x bigger than its predefined value */
+  line-height: 1.7;
+  /* Extension installed: "Color Highlight" */
+  color: $color-grey-dark;
+  /* Padding is not inherited by child elements, unlike the font
+    properties above */
+  padding: 3rem;
+  /* Apply border-box box-sizing to all elements inside the body. To do this, make sure box sizing is set to inherit for all elements. */
+  box-sizing: border-box;
+}
+
+.header {
+  /* Set the height of the header to 95% of the viewport height */
+  height: 95vh;
+  /* Use a url to specify the actual background image. Use the linear
+    gradient property in front of the url to cover the image with a
+    color gradient that changes, in this case, from top left to bottom
+    right */
+  background-image: linear-gradient( 
+    to right bottom,
+     rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)),
+       url(../img/hero.jpg);
+  background-size: cover;
+  /* when resizing browser, background image top stays the same while
+    the bottom gets cropped  */
+  background-position: top;
+  /* Clip the background image using exact clipping coordinates. These
+    represent the x and y coordinates of each corner of the image, starting
+    from the top left corner and turning clockwise to the next corners. An
+    infinite (?) number of corners can be added. The clip-path also works
+    with standard background colors */
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+  position: relative;
+
+  &__logo-box {
+  /* Setting the position to absolute means the element will be positioned
+    relative to its first positioned (!) ancestor element. This logo-box is
+    positioned inside the header, so the header must also have a position
+    property assigned. */
+    position: absolute;
+    /* When the positions are correctly assigned, the following top and left
+      values will be relative to the header container instead of the browser. */
+    top: 4rem;
+    left: 4rem;
+  }
+}
+
+.header__logo {
+  /* When only the height is specified, the width will be automatically figured
+    out. The same is true for the other way around. */
+  height: 3.5rem;
+}
+
+.header__text-box {
+  position: absolute;
+  /* With top and left at 50%, the top left of the container will be centered,
+    but the element as a whole is not centered yet. See transform property. */
+  top: 40%;
+  left: 50%;
+  /* The transform property offsets the container position relative to its own width.
+    The center of the container will now be at the center of its parent container. */
+  transform: translate(-50%, -50%);
+  /* The button inside this box is set to display as an inline-block element. Therefore,
+    this element is treated as text and the text-align set to center will center the
+    button/link element. */
+  text-align: center;
+}
+
+.heading-primary {
+  color: $color-white;
+  text-transform: uppercase;
+  /* Fix the shakiness of the animation from its child elements. */
+  backface-visibility: hidden;
+  margin-bottom: 6rem;
+}
+
+.heading-primary--main {
+  /* The block display is set in order to put the headings on two separate lines. */
+  display: block;
+  font-size: 6rem;
+  font-weight: 400;
+  letter-spacing: 3.5rem;
+  /* "Call" the animation by adding the animation-name property. The durarion 
+    property defines the total time length of the animation. */
+  animation-name: moveInLeft;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  /* animation-iteration-count: 3; */
+  /* animation-delay: 3s; */
+}
+
+.heading-primary--sub {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1.75rem;
+  /* Unlike in the primary main heading, the animation properties are written
+    on a single line */
+  animation: moveInRight 1s ease-out;
+}
+
+/* SPECIFICATION OF THE ANIMATIONS */
+
+@keyframes moveInLeft {
+  /* The percentages represent the relative point in time of the whole animation */
+  0% {
+    opacity: 0;
+    /* translateX() only affects the animation in horizontal direction */
+    transform: translateX(-10rem);
+  }
+  80% {
+    transform: translateX(1rem);
+  }
+  100% {
+    opacity: 1;
+    /* Return to the original position with translate(0) */
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInRight {
+  /* The percentages represent the relative point in time of the whole animation */
+  0% {
+    opacity: 0;
+    /* translateX() only affects the animation in horizontal direction */
+    transform: translateX(10rem);
+  }
+  80% {
+    transform: translateX(-1rem);
+  }
+  100% {
+    opacity: 1;
+    /* Return to the original position with translate(0) */
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInBottom {
+  /* The percentages represent the relative point in time of the whole animation */
+  0% {
+    opacity: 0;
+    /* translateX() only affects the animation in horizontal direction */
+    transform: translateY(3rem);
+  }
+  100% {
+    opacity: 1;
+    /* Return to the original position with translate(0) */
+    transform: translate(0);
+  }
+}
+
+/* Use pseudoclasses to specify elements under specific conditions. */
+
+.btn:link, .btn:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1.5rem 4rem;
+  display: inline-block;
+  border-radius: 10rem;
+  /* Use all to set a transition on all the properties above. Moreover,
+    the transition property only has to be set on the initial (link) state.
+    This property then will also apply to the hover and active pseudo-classes. */
+  transition: all .2s;
+  /* Set the position to relative in order to place the pseudo-element (::after)
+    behind it. */
+  position: relative;
+  font-size: 1.6rem;
+}
+
+.btn:hover {
+  transform: translateY(-.3rem);
+  /* The first value in the box-shadow property refers to the shadow in the
+    horizontal direction, the second value refers to the vertical direction. The
+    third value refers to the blur. A higher blur value makes the element seem
+    to be further away. */
+  box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+}
+
+.btn:active {
+  /* The translateY value is in relation to the initial state, not to
+    the hovered state. */
+  transform: translateY(-.1rem);
+  /* By clicking the button, it loses a bit of shadow (both the size and blur. */
+  box-shadow: 0 .5rem 1rem rgba($color-black, 0.2);
+}
+
+.btn--white {
+  background-color: $color-white;
+  color: $color-grey-dark;
+}
+
+/* Comment */
+
+.btn::after {
+  /* The content, even if it is empty, and the display properties need to be
+    specified. */
+  content: '';
+  /* This will be inline-block, since the element itself is set to inline-block. */
+  display: inline-block;
+  /* The pseudo-element is basically treated as a child element of the element
+    itself. Therefore, height and width specification are relative to its parent
+    element. */
+  height: 100%;
+  width: 100%;
+  border-radius: 10rem;
+  /* Use the position, top and left properties to put the pseudo-element behind
+    the original element. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  /* For the transition of the pseudo-element to work, put the transition property
+    in the initial state of the pseudo-element, not to be confused with the initial state
+    of the original element. */
+  transition: all .4s;
+}
+
+.btn--white::after {
+  background-color: $color-white;
+}
+
+/* Add specific styles for the pseudo-element while hovering the button. */
+
+.btn:hover::after {
+  /* The transform scale property specifies the relative size with respect to the 
+    original element. 2 means a size that is twice the size of the orginal element. */
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+
+.btn--animated {
+  animation: moveInBottom .5s ease-out .75s;
+  /* The following property will apply the styles to the element that are specified
+    in the @keyframes animation specification at 0%. In this way, the delay attribute
+    will work withouth the original element being displayed before the delay time. */
+  animation-fill-mode: backwards;
+}
